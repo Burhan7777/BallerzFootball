@@ -61,4 +61,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.13.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
 
+    //MATERIAL 3 DEPENDENCY
+    implementation "androidx.compose.material3:material3:1.0.1"
+
 }

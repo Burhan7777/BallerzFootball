@@ -6,30 +6,151 @@
     android:layout_height="match_parent"
     tools:context=".view.activities.MainActivity">
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/fixtureLeagueSpinner"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/fixturesLeaguesDropDownMenu"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:hint="Select League"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxStrokeColor="@color/teal_200"
+        app:boxStrokeWidth="1dp"
+        app:hintTextColor="@color/teal_200"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <AutoCompleteTextView
+            android:id="@+id/fixtureAutocomplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            app:simpleItems="@array/fixtureLeagues" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <TextView
         android:id="@+id/fixtureName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="40dp"
-        android:text="League Name"
-        android:textSize="35dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/textview_background"
+        android:text="All Favourite Leagues"
+        android:padding="10dp"
+        android:textSize="15dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fixtureLeagueSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/fixturesHorizontalView" />
+
+    <HorizontalScrollView
+        android:id="@+id/fixturesHorizontalView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fixturesLeaguesDropDownMenu">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fixtureDateOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="date"
+                android:textColor="#d2d2d2"
+                app:backgroundTint="#333333"
+                app:cornerRadius="10dp"
+                app:rippleColor="@color/teal_200"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fixtureDateTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="date"
+                android:textColor="#d2d2d2"
+                app:backgroundTint="#333333"
+                app:cornerRadius="10dp"
+                app:rippleColor="@color/teal_200"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fixtureDateThree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="date"
+                android:textColor="#d2d2d2"
+                app:backgroundTint="#333333"
+                app:cornerRadius="10dp"
+                app:rippleColor="@color/teal_200"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fixtureDateFour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="date"
+                android:textColor="#d2d2d2"
+                app:backgroundTint="#333333"
+                app:cornerRadius="10dp"
+                app:rippleColor="@color/teal_200"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fixtureDateFive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="date"
+                android:textColor="#d2d2d2"
+                app:backgroundTint="#333333"
+                app:cornerRadius="10dp"
+                app:rippleColor="@color/teal_200"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fixtureDateSix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="date"
+                android:textColor="#d2d2d2"
+                app:backgroundTint="#333333"
+                app:cornerRadius="10dp"
+                app:rippleColor="@color/teal_200"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fixtureDateSeven"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="date"
+                android:textColor="#d2d2d2"
+                app:backgroundTint="#333333"
+                app:cornerRadius="10dp"
+                app:rippleColor="@color/teal_200"/>
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fixturesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,9 +161,20 @@
         android:id="@+id/fixtureProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/fixturesNoResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

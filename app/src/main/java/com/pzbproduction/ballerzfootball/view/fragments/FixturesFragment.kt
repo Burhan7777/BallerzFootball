@@ -9,12 +9,13 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.pzbproduction.ballerzfootball.R
 import com.pzbproduction.ballerzfootball.databinding.FragmentFixturesBinding
-import com.pzbproduction.ballerzfootball.model.ApiDataClass
 import com.pzbproduction.ballerzfootball.model.ApiTokens
 import com.pzbproduction.ballerzfootball.view.adapter.FixturesAdapter
 import com.pzbproduction.ballerzfootball.viewmodel.FixturesFragmentViewModel
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.HashMap
 
 class FixturesFragment : Fragment() {
     private lateinit var binding: FragmentFixturesBinding
@@ -41,18 +42,58 @@ class FixturesFragment : Fragment() {
         viewModel.getTodaysMatch(map)
         viewModel.getLogosOfHomeClub()
         viewModel.getLogosOfAwayClub()
+        //  viewModel.getIsLoading()
+        //  viewModel.getHasLoaded()
 
-        viewModel.getApiDataClass.observe(viewLifecycleOwner, Observer {
+        //   Log.i("viewmodel", viewModel.getLogosOfHomeClubs.toString())
+
+
+        viewModel.getIsLoading.observe(viewLifecycleOwner, Observer {
+            if (it) binding.fixtureProgressBar.visibility = View.VISIBLE
+        })
+
+        viewModel.getHasLoaded.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                binding.fixtureProgressBar.visibility = View.INVISIBLE
+                binding.fixturesNoResult.text = "No matches today"
+            }
+
+        })
+
+        if (viewModel.getApiDataClass.value != null) {
+            viewModel.getApiDataClass.observe(viewLifecycleOwner, Observer {
+                adapter.updateList(it)
+                //  Log.i("sizeFragment", it.toString())
+            })
+
+            viewModel.getLogosOfHomeClubs.observe(viewLifecycleOwner, Observer {
+                adapter.getLogosOfHomeClubs(it)
+            })
+
+            viewModel.getLogosOfAwayClubs.observe(viewLifecycleOwner, Observer {
+                adapter.getLogosOfAwayClubs(it)
+            })
+
+            viewModel.getApiDataClassFromSpinner.observe(viewLifecycleOwner, Observer {
+                adapter.updateList(it)
+            })
+
+        } else {
+        }
+
+        viewModel.getMatchesBySpecificDate.observe(viewLifecycleOwner, Observer {
             adapter.updateList(it)
-            Log.i("sizeFragment", it.toString())
+            Log.i("specific", it.size.toString())
         })
 
-        viewModel.getLogosOfHomeClubs.observe(viewLifecycleOwner, Observer {
+        viewModel.getLogosOfHomeClubsFromSpecificDate.observe(viewLifecycleOwner, Observer {
             adapter.getLogosOfHomeClubs(it)
+            Log.i("specificHome", it.size.toString())
         })
 
-        viewModel.getLogosOfAwayClubs.observe(viewLifecycleOwner, Observer {
+        viewModel.getLogosOfAwayClubsFromSpecificDate.observe(viewLifecycleOwner, Observer {
             adapter.getLogosOfAwayClubs(it)
+            Log.i("specificAway", it.size.toString())
         })
 
 
@@ -61,5 +102,78 @@ class FixturesFragment : Fragment() {
         binding.fixturesRecyclerView.adapter = adapter
 
         binding.fixtureProgressBar.visibility = View.INVISIBLE
+
+        binding.fixtureAutocomplete.setOnItemClickListener { parent, view, position, id ->
+            if (position == 0) {
+                binding.fixtureName.text = parent.getItemAtPosition(0).toString()
+                var mapSuperliga = HashMap<String, String>()
+                mapSuperliga["api_token"] = ApiTokens.FIXTURES_API
+                mapSuperliga["filters"] = "fixtureLeagues:271;todayDate"
+
+                viewModel.getApiDataClassFromSpinner(mapSuperliga)
+
+            }
+
+            if (position == 1) {
+                binding.fixtureName.text = parent.getItemAtPosition(1).toString()
+                var mapPremiership = HashMap<String, String>()
+                mapPremiership["api_token"] = ApiTokens.FIXTURES_API
+                mapPremiership["filters"] = "fixtureLeagues:501;todayDate"
+
+                viewModel.getApiDataClassFromSpinner(mapPremiership)
+            }
+        }
+
+        binding.fixtureDateThree.setOnClickListener {
+            var mapDate: HashMap<String, String> = HashMap()
+            mapDate["api_token"] = ApiTokens.FIXTURES_API
+            mapDate["include"] = "participants"
+            viewModel.getMatchesBySpecificDate("2023-04-10", "2023-04-10", mapDate)
+            viewModel.getLogosOfHomeClubFromSpecificDate()
+            viewModel.getLogosOfAwayClubFromSpecificDate()
+        }
+
+        binding.fixtureDateOne.text = getDateOnButtons(-3)
+        binding.fixtureDateTwo.text = getDateOnButtons(-2)
+        binding.fixtureDateThree.text = getDateOnButtons(-1)
+        binding.fixtureDateFour.text = "TODAY"
+        binding.fixtureDateFive.text = getDateOnButtons(1)
+        binding.fixtureDateSix.text = getDateOnButtons(2)
+        binding.fixtureDateSeven.text = getDateOnButtons(3)
+
+    }
+
+    private fun getDateOnButtons(amount: Int): String {
+        var calendar = Calendar.getInstance()
+        calendar.add(Calendar.DATE, amount)
+        var dateFormat = SimpleDateFormat("dd MM")
+        var date = dateFormat.format(calendar.time)
+        var month = getDescriptiveMonth(date)
+        return date.replace(date.substring(3, 5), month)
+
+
+    }
+
+    private fun getDescriptiveMonth(date: String): String {
+        var month = when (date.substring(3, 5)) {
+            "01" -> return "JAN"
+            "02" -> return "FEB"
+            "03" -> return "MAR"
+            "04" -> return "APR"
+            "05" -> return "MAY"
+            "06" -> return "JUN"
+            "07" -> return "JUL"
+            "08" -> return "AUG"
+            "09" -> return "SEP"
+            "10" -> return "OCT"
+            "11" -> return "NOV"
+            "12" -> return "DEC"
+            else -> "Error"
+        }
+        return month
+    }
+
+    private fun sendApiCallsFromDifferentDates() {
+
     }
 }

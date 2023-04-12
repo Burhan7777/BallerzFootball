@@ -14,4 +14,16 @@ interface ApiInterface {
 
     @GET
     fun getImagesOfClubs(@Url image: String): Call<ResponseBody>
+
+    @GET("fixtures")
+    fun getMatchesBySelectionFromSpinner(@QueryMap map: HashMap<String, String>): Call<ApiDataClassWrapper<ApiDataClass>>
+
+    @GET("fixtures/between/{startDate}/{endDate}")
+    fun getMatchesBySpecificDate(
+        @Path("startDate") startDate: String,
+        @Path("endDate") endDate: String,
+        @QueryMap map: HashMap<String, String>
+    ): Call<ApiDataClassWrapper<ApiDataClass>>
+
+
 }

@@ -35,10 +35,12 @@ class FixturesAdapter(context: Context) :
 
     fun getLogosOfHomeClubs(logosOfHomeClubs: List<Bitmap>) {
         this.logosOfHomeClubs = logosOfHomeClubs
+        notifyDataSetChanged()
     }
 
     fun getLogosOfAwayClubs(logosOfAwayClubs: List<Bitmap>) {
         this.logosOfAwayClubs = logosOfAwayClubs
+        notifyDataSetChanged()
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -82,7 +84,7 @@ class FixturesAdapter(context: Context) :
         return list!!.size
     }
 
-    fun changeTheDateFormatOfReceivedTime(time: String): String {
+   private fun changeTheDateFormatOfReceivedTime(time: String): String {
         var originalDataFormat = SimpleDateFormat("yyyy-mm-dd HH:mm:ss")
         var date = originalDataFormat.parse(time)
         var targetDataFormat = SimpleDateFormat("HH:mm")
