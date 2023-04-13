@@ -2,9 +2,13 @@ CHANGELOG
 -----------------------
 -----------------------
 
+ver 1.2.1 (13th April)
+-------------------------------
+--> All dates are working now
+
 ver 1.1.1 (12th Apr 2023)
 -------------------------------
---> Search based on league selected in spinner
+--> Search based on league selected in spinner 
 --> Added other dates other than today
 
 ver 1.0.1 (11th Apr 2023)

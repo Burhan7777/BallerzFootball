@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pzbproduction.ballerzfootball.R
@@ -73,18 +74,22 @@ class FixturesAdapter(context: Context) :
         else if (list!![position].participants[1].meta.location == "home")
             holder.fixtureHomeTeamName.text = list!![position].participants[1].name
 
-        Glide.with(context).load(logosOfHomeClubs[position]).centerInside()
-            .into(holder.fixtureTeamHomeImage)
+        try {
+            Glide.with(context).load(logosOfHomeClubs[position]).centerInside()
+                .into(holder.fixtureTeamHomeImage)
 
-        Glide.with(context).load(logosOfAwayClubs[position]).centerInside()
-            .into(holder.fixtureTeamAwayImage)
+            Glide.with(context).load(logosOfAwayClubs[position]).centerInside()
+                .into(holder.fixtureTeamAwayImage)
+        } catch (e: java.lang.IndexOutOfBoundsException) {
+            Toast.makeText(context, "Chill...too many requests", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun getItemCount(): Int {
         return list!!.size
     }
 
-   private fun changeTheDateFormatOfReceivedTime(time: String): String {
+    private fun changeTheDateFormatOfReceivedTime(time: String): String {
         var originalDataFormat = SimpleDateFormat("yyyy-mm-dd HH:mm:ss")
         var date = originalDataFormat.parse(time)
         var targetDataFormat = SimpleDateFormat("HH:mm")

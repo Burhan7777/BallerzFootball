@@ -1,7 +1,9 @@
 package com.pzbproduction.ballerzfootball.viewmodel
 
+import android.app.Application
 import android.graphics.Bitmap
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +14,7 @@ import com.pzbproduction.ballerzfootball.model.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class FixturesFragmentViewModel : ViewModel() {
+class FixturesFragmentViewModel(application: Application) : AndroidViewModel(application) {
 
     private var apiDataClass: MutableLiveData<ArrayList<ApiDataClass>> = MutableLiveData()
     private var logosOfHomeClubs: MutableLiveData<ArrayList<Bitmap>> = MutableLiveData()
@@ -27,7 +29,7 @@ class FixturesFragmentViewModel : ViewModel() {
         MutableLiveData()
     private var isLoading: MutableLiveData<Boolean> = MutableLiveData()
     private var hasLoaded: MutableLiveData<Boolean> = MutableLiveData()
-    private var repository = Repository()
+    private var repository = Repository(application)
 
     val getApiDataClass: LiveData<ArrayList<ApiDataClass>> get() = apiDataClass
     val getLogosOfHomeClubs: LiveData<ArrayList<Bitmap>> get() = logosOfHomeClubs
@@ -59,13 +61,13 @@ class FixturesFragmentViewModel : ViewModel() {
         }
     }
 
-    fun getLogosOfHomeClubFromSpecificDate(){
+    fun getLogosOfHomeClubFromSpecificDate() {
         viewModelScope.launch(Dispatchers.IO) {
             logosOfHomeClubsFromSpecificDate.postValue(repository.getLogosOfHomeClubsFromSpecificDate())
         }
     }
 
-    fun getLogosOfAwayClubFromSpecificDate(){
+    fun getLogosOfAwayClubFromSpecificDate() {
         viewModelScope.launch(Dispatchers.IO) {
             logosOfAwayClubsFromSpecificDate.postValue(repository.getLogosOfAwayClubsFromSpecificDate())
         }

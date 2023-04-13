@@ -78,22 +78,21 @@ class FixturesFragment : Fragment() {
                 adapter.updateList(it)
             })
 
-        } else {
         }
 
         viewModel.getMatchesBySpecificDate.observe(viewLifecycleOwner, Observer {
             adapter.updateList(it)
-            Log.i("specific", it.size.toString())
+          //  Log.i("specific", it.size.toString())
         })
 
         viewModel.getLogosOfHomeClubsFromSpecificDate.observe(viewLifecycleOwner, Observer {
             adapter.getLogosOfHomeClubs(it)
-            Log.i("specificHome", it.size.toString())
+        //    Log.i("specificHome", it.size.toString())
         })
 
         viewModel.getLogosOfAwayClubsFromSpecificDate.observe(viewLifecycleOwner, Observer {
             adapter.getLogosOfAwayClubs(it)
-            Log.i("specificAway", it.size.toString())
+        //    Log.i("specificAway", it.size.toString())
         })
 
 
@@ -124,14 +123,7 @@ class FixturesFragment : Fragment() {
             }
         }
 
-        binding.fixtureDateThree.setOnClickListener {
-            var mapDate: HashMap<String, String> = HashMap()
-            mapDate["api_token"] = ApiTokens.FIXTURES_API
-            mapDate["include"] = "participants"
-            viewModel.getMatchesBySpecificDate("2023-04-10", "2023-04-10", mapDate)
-            viewModel.getLogosOfHomeClubFromSpecificDate()
-            viewModel.getLogosOfAwayClubFromSpecificDate()
-        }
+        sendApiCallsFromDifferentDates()
 
         binding.fixtureDateOne.text = getDateOnButtons(-3)
         binding.fixtureDateTwo.text = getDateOnButtons(-2)
@@ -150,7 +142,6 @@ class FixturesFragment : Fragment() {
         var date = dateFormat.format(calendar.time)
         var month = getDescriptiveMonth(date)
         return date.replace(date.substring(3, 5), month)
-
 
     }
 
@@ -174,6 +165,91 @@ class FixturesFragment : Fragment() {
     }
 
     private fun sendApiCallsFromDifferentDates() {
+        binding.fixtureDateOne.setOnClickListener {
+            var mapDate: HashMap<String, String> = HashMap()
+            mapDate["api_token"] = ApiTokens.FIXTURES_API
+            mapDate["include"] = "participants"
+            var date = getProperDateFormatForTheApiCall(-3)
+            viewModel.getMatchesBySpecificDate(date, date, mapDate)
+            viewModel.getLogosOfHomeClubFromSpecificDate()
+            viewModel.getLogosOfAwayClubFromSpecificDate()
 
+        }
+
+        binding.fixtureDateTwo.setOnClickListener {
+            var mapDate: HashMap<String, String> = HashMap()
+            mapDate["api_token"] = ApiTokens.FIXTURES_API
+            mapDate["include"] = "participants"
+            var date = getProperDateFormatForTheApiCall(-2)
+            viewModel.getMatchesBySpecificDate(date, date, mapDate)
+            viewModel.getLogosOfHomeClubFromSpecificDate()
+            viewModel.getLogosOfAwayClubFromSpecificDate()
+
+        }
+
+        binding.fixtureDateThree.setOnClickListener {
+            var mapDate: HashMap<String, String> = HashMap()
+            mapDate["api_token"] = ApiTokens.FIXTURES_API
+            mapDate["include"] = "participants"
+            var date = getProperDateFormatForTheApiCall(-1)
+            viewModel.getMatchesBySpecificDate(date, date, mapDate)
+            viewModel.getLogosOfHomeClubFromSpecificDate()
+            viewModel.getLogosOfAwayClubFromSpecificDate()
+
+        }
+
+        binding.fixtureDateFour.setOnClickListener {
+            var mapDate: HashMap<String, String> = HashMap()
+            mapDate["api_token"] = ApiTokens.FIXTURES_API
+            mapDate["include"] = "participants"
+            var date = getProperDateFormatForTheApiCall(0)
+            viewModel.getMatchesBySpecificDate(date, date, mapDate)
+            viewModel.getLogosOfHomeClubFromSpecificDate()
+            viewModel.getLogosOfAwayClubFromSpecificDate()
+
+        }
+
+        binding.fixtureDateFive.setOnClickListener {
+            var mapDate: HashMap<String, String> = HashMap()
+            mapDate["api_token"] = ApiTokens.FIXTURES_API
+            mapDate["include"] = "participants"
+            var date = getProperDateFormatForTheApiCall(1)
+            viewModel.getMatchesBySpecificDate(date, date, mapDate)
+            viewModel.getLogosOfHomeClubFromSpecificDate()
+            viewModel.getLogosOfAwayClubFromSpecificDate()
+
+        }
+
+        binding.fixtureDateSix.setOnClickListener {
+            var mapDate: HashMap<String, String> = HashMap()
+            mapDate["api_token"] = ApiTokens.FIXTURES_API
+            mapDate["include"] = "participants"
+            var date = getProperDateFormatForTheApiCall(2)
+            viewModel.getMatchesBySpecificDate(date, date, mapDate)
+            viewModel.getLogosOfHomeClubFromSpecificDate()
+            viewModel.getLogosOfAwayClubFromSpecificDate()
+
+        }
+
+        binding.fixtureDateSeven.setOnClickListener {
+            var mapDate: HashMap<String, String> = HashMap()
+            mapDate["api_token"] = ApiTokens.FIXTURES_API
+            mapDate["include"] = "participants"
+            var date = getProperDateFormatForTheApiCall(3)
+            viewModel.getMatchesBySpecificDate(date, date, mapDate)
+            viewModel.getLogosOfHomeClubFromSpecificDate()
+            viewModel.getLogosOfAwayClubFromSpecificDate()
+
+        }
+
+
+    }
+
+    private fun getProperDateFormatForTheApiCall(amount: Int): String {
+        var calendar = Calendar.getInstance()
+        calendar.add(Calendar.DATE, amount)
+        var dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        var date = dateFormat.format(calendar.time)
+        return date
     }
 }

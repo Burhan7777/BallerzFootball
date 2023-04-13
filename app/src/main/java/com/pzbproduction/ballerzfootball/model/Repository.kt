@@ -1,10 +1,22 @@
 package com.pzbproduction.ballerzfootball.model
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
+import android.widget.Toast
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class Repository {
+class Repository(context: Context) {
+
+    private var context: Context
+
+    init {
+        this.context = context
+    }
 
     private var retrofitInstance = ApiInstance.getInstance()
     private var apiInterface = retrofitInstance?.create(ApiInterface::class.java)
@@ -17,6 +29,7 @@ class Repository {
     private var matchBySpecificDate: ArrayList<ApiDataClass>? = ArrayList()
     private var isLoading = false
     private var hasLoaded: Boolean = false
+    private var coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
 
     fun getTodaysMatch(map: HashMap<String, String>): ArrayList<ApiDataClass>? {
         //  Log.i("sizeViewModel", Thread.currentThread().name.toString())
@@ -121,80 +134,108 @@ class Repository {
         endDate: String,
         map: HashMap<String, String>
     ): ArrayList<ApiDataClass>? {
+        matchBySpecificDate?.clear()
+        if (logosOfHomeClubsFromSpecificDate?.size!! > 0 || logosOfAwayClubsFromSpecificDate?.size!! > 0) {
+            logosOfHomeClubsFromSpecificDate?.clear()
+            logosOfAwayClubsFromSpecificDate?.clear()
+        }
         var apiCall = apiInterface?.getMatchesBySpecificDate(startDate, endDate, map)
         var response = apiCall?.execute()
         if (response!!.isSuccessful) {
             matchBySpecificDate = response.body()?.data?.toCollection(ArrayList())
-            if (matchBySpecificDate?.size != null) {
-                getLogosOfAwayClubsFromSpecificDate()
-                getLogosOfHomeClubsFromSpecificDate()
-            }
+            //   if (matchBySpecificDate?.size!! > 0) {
+            getLogosOfAwayClubsFromSpecificDate()
+            getLogosOfHomeClubsFromSpecificDate()
+            Log.i("sizeAction", "Hello")
+            Log.i("sizeThread", Thread.currentThread().name.toString())
+            //   }
         }
+        Log.i("size", matchBySpecificDate?.size.toString())
         return matchBySpecificDate
     }
 
     fun getLogosOfHomeClubsFromSpecificDate(): ArrayList<Bitmap>? {
-        for (i in matchBySpecificDate!!.indices) {
-            if (matchBySpecificDate!![i].participants[0].meta.location == "home") {
-                var pathString = matchBySpecificDate!![i].participants[0].image
-                //  Log.i("sizePath", pathString)
-                var apiCall = apiInterface?.getImagesOfClubs(pathString)
-                var response = apiCall?.execute()
-                if (response!!.isSuccessful) {
-                    logosOfHomeClubsFromSpecificDate?.add(
-                        BitmapFactory.decodeStream(
-                            response.body()?.byteStream()!!
-                        )
-                    )
-                }
-            } else if (matchBySpecificDate!![i].participants[1].meta.location == "home") {
-                var pathString = matchBySpecificDate!![i].participants[1].image
-                //  Log.i("sizePath", pathString)
-                var apiCall = apiInterface?.getImagesOfClubs(pathString)
-                var response = apiCall?.execute()
-                if (response!!.isSuccessful) {
-                    logosOfHomeClubsFromSpecificDate?.add(
-                        BitmapFactory.decodeStream(
-                            response.body()?.byteStream()!!
-                        )
-                    )
+        try {
+            if (matchBySpecificDate?.isNotEmpty()!!) {
+                for (i in 0 until matchBySpecificDate?.size!!) {
+                    if (matchBySpecificDate!![i].participants[0].meta.location == "home") {
+                        var pathString = matchBySpecificDate!![i].participants[0].image
+                        //  Log.i("sizePath", pathString)
+                        var apiCall = apiInterface?.getImagesOfClubs(pathString)
+                        var response = apiCall?.execute()
+                        if (response!!.isSuccessful) {
+                            logosOfHomeClubsFromSpecificDate?.add(
+                                BitmapFactory.decodeStream(
+                                    response.body()?.byteStream()!!
+                                )
+                            )
+                        }
+                    } else if (matchBySpecificDate!![i].participants[1].meta.location == "home") {
+                        var pathString = matchBySpecificDate!![i].participants[1].image
+                        //  Log.i("sizePath", pathString)
+                        var apiCall = apiInterface?.getImagesOfClubs(pathString)
+                        var response = apiCall?.execute()
+                        if (response!!.isSuccessful) {
+                            logosOfHomeClubsFromSpecificDate?.add(
+                                BitmapFactory.decodeStream(
+                                    response.body()?.byteStream()!!
+                                )
+                            )
+                        }
+                    }
                 }
             }
+        } catch (e: java.lang.IndexOutOfBoundsException) {
+            coroutineScope.launch {
+                Toast.makeText(context, "Calm down.. Too many requests", Toast.LENGTH_SHORT).show()
+            }
         }
-        Log.i("sizeImages", logosOfHomeClubsFromSpecificDate?.size.toString())
+        //  Log.i("sizeImages", logosOfHomeClubsFromSpecificDate?.size.toString())
         return logosOfHomeClubsFromSpecificDate
     }
 
     fun getLogosOfAwayClubsFromSpecificDate(): ArrayList<Bitmap>? {
-        for (i in matchBySpecificDate!!.indices) {
-            if (matchBySpecificDate!![i].participants[0].meta.location == "away") {
-                var pathString = matchBySpecificDate!![i].participants[0].image
-                //  Log.i("sizePath", pathString)
-                var apiCall = apiInterface?.getImagesOfClubs(pathString)
-                var response = apiCall?.execute()
-                if (response!!.isSuccessful) {
-                    logosOfAwayClubsFromSpecificDate?.add(
-                        BitmapFactory.decodeStream(
-                            response.body()?.byteStream()!!
-                        )
-                    )
+        /* if (logosOfAwayClubsFromSpecificDate?.size!! != 0) {
+             logosOfAwayClubsFromSpecificDate?.clear()
+         }*/
+        try {
+            if (matchBySpecificDate?.isNotEmpty()!!) {
+                for (i in 0 until matchBySpecificDate?.size!!) {
+                    Log.i("sizeIndices", matchBySpecificDate?.indices.toString())
+                    if (matchBySpecificDate!![i].participants[0].meta.location == "away") {
+                        var pathString = matchBySpecificDate!![i].participants[0].image
+                        //  Log.i("sizePath", pathString)
+                        var apiCall = apiInterface?.getImagesOfClubs(pathString)
+                        var response = apiCall?.execute()
+                        if (response!!.isSuccessful) {
+                            logosOfAwayClubsFromSpecificDate?.add(
+                                BitmapFactory.decodeStream(
+                                    response.body()?.byteStream()!!
+                                )
+                            )
+                        }
+                    } else if (matchBySpecificDate!![i].participants[1].meta.location == "away") {
+                        var pathString = matchBySpecificDate!![i].participants[1].image
+                        //  Log.i("sizePath", pathString)
+                        var apiCall = apiInterface?.getImagesOfClubs(pathString)
+                        var response = apiCall?.execute()
+                        if (response!!.isSuccessful) {
+                            logosOfAwayClubsFromSpecificDate?.add(
+                                BitmapFactory.decodeStream(
+                                    response.body()?.byteStream()!!
+                                )
+                            )
+                        }
+                    }
                 }
-            } else if (matchBySpecificDate!![i].participants[1].meta.location == "away") {
-                var pathString = matchBySpecificDate!![i].participants[1].image
-                //  Log.i("sizePath", pathString)
-                var apiCall = apiInterface?.getImagesOfClubs(pathString)
-                var response = apiCall?.execute()
-                if (response!!.isSuccessful) {
-                    logosOfAwayClubsFromSpecificDate?.add(
-                        BitmapFactory.decodeStream(
-                            response.body()?.byteStream()!!
-                        )
-                    )
-                }
+            }
+        } catch (e: java.lang.IndexOutOfBoundsException) {
+            coroutineScope.launch {
+                Toast.makeText(context, "Chill..Too many requests", Toast.LENGTH_SHORT).show()
             }
         }
         hasLoaded = true
-        Log.i("sizeImages", logosOfAwayClubsFromSpecificDate?.size.toString())
+        //  Log.i("sizeImages", logosOfAwayClubsFromSpecificDate?.size.toString())
         return logosOfAwayClubsFromSpecificDate
     }
 }
