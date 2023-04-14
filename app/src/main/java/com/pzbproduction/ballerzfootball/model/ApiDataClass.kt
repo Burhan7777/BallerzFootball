@@ -10,7 +10,8 @@ data class ApiDataClassWrapper<T> constructor(
 data class ApiDataClass constructor(
     @SerializedName("starting_at")
     val time: String,
-    var participants: List<Participants>
+    var participants: List<Participants>,
+    var scores: List<Scores>
 )
 
 data class Participants constructor(
@@ -22,4 +23,14 @@ data class Participants constructor(
 
 data class MetaData constructor(
     val location: String?
+)
+
+data class Scores constructor(
+    val description: String,
+    val score: Score
+)
+
+data class Score constructor(
+    var goals: String,
+    var participant: String
 )

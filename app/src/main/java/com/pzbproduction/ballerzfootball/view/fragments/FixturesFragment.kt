@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pzbproduction.ballerzfootball.databinding.FragmentFixturesBinding
@@ -80,20 +81,24 @@ class FixturesFragment : Fragment() {
 
         }
 
-        viewModel.getMatchesBySpecificDate.observe(viewLifecycleOwner, Observer {
-            adapter.updateList(it)
-          //  Log.i("specific", it.size.toString())
-        })
+       // Log.i("random", viewModel.getMatchesBySpecificDate.value.toString())
 
-        viewModel.getLogosOfHomeClubsFromSpecificDate.observe(viewLifecycleOwner, Observer {
-            adapter.getLogosOfHomeClubs(it)
-        //    Log.i("specificHome", it.size.toString())
-        })
+       // if (viewModel.getMatchesBySpecificDate.value != null) {
+            viewModel.getMatchesBySpecificDate.observe(viewLifecycleOwner, Observer {
+                adapter.updateList(it)
+           //     Log.i("specific", it.size.toString())
+            })
 
-        viewModel.getLogosOfAwayClubsFromSpecificDate.observe(viewLifecycleOwner, Observer {
-            adapter.getLogosOfAwayClubs(it)
-        //    Log.i("specificAway", it.size.toString())
-        })
+            viewModel.getLogosOfHomeClubsFromSpecificDate.observe(viewLifecycleOwner, Observer {
+                adapter.getLogosOfHomeClubs(it)
+            //    Log.i("specificHome", it.size.toString())
+            })
+
+            viewModel.getLogosOfAwayClubsFromSpecificDate.observe(viewLifecycleOwner, Observer {
+                adapter.getLogosOfAwayClubs(it)
+            //    Log.i("specificAway", it.size.toString())
+            })
+      // }
 
 
         binding.fixturesRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -168,7 +173,8 @@ class FixturesFragment : Fragment() {
         binding.fixtureDateOne.setOnClickListener {
             var mapDate: HashMap<String, String> = HashMap()
             mapDate["api_token"] = ApiTokens.FIXTURES_API
-            mapDate["include"] = "participants"
+            mapDate["include"] = "participants;scores"
+            viewModel.jobCancelled()
             var date = getProperDateFormatForTheApiCall(-3)
             viewModel.getMatchesBySpecificDate(date, date, mapDate)
             viewModel.getLogosOfHomeClubFromSpecificDate()
@@ -179,7 +185,8 @@ class FixturesFragment : Fragment() {
         binding.fixtureDateTwo.setOnClickListener {
             var mapDate: HashMap<String, String> = HashMap()
             mapDate["api_token"] = ApiTokens.FIXTURES_API
-            mapDate["include"] = "participants"
+            mapDate["include"] = "participants;scores"
+            viewModel.jobCancelled()
             var date = getProperDateFormatForTheApiCall(-2)
             viewModel.getMatchesBySpecificDate(date, date, mapDate)
             viewModel.getLogosOfHomeClubFromSpecificDate()
@@ -190,7 +197,8 @@ class FixturesFragment : Fragment() {
         binding.fixtureDateThree.setOnClickListener {
             var mapDate: HashMap<String, String> = HashMap()
             mapDate["api_token"] = ApiTokens.FIXTURES_API
-            mapDate["include"] = "participants"
+            mapDate["include"] = "participants;scores"
+            viewModel.jobCancelled()
             var date = getProperDateFormatForTheApiCall(-1)
             viewModel.getMatchesBySpecificDate(date, date, mapDate)
             viewModel.getLogosOfHomeClubFromSpecificDate()
@@ -201,7 +209,8 @@ class FixturesFragment : Fragment() {
         binding.fixtureDateFour.setOnClickListener {
             var mapDate: HashMap<String, String> = HashMap()
             mapDate["api_token"] = ApiTokens.FIXTURES_API
-            mapDate["include"] = "participants"
+            mapDate["include"] = "participants;scores"
+            viewModel.jobCancelled()
             var date = getProperDateFormatForTheApiCall(0)
             viewModel.getMatchesBySpecificDate(date, date, mapDate)
             viewModel.getLogosOfHomeClubFromSpecificDate()
@@ -212,7 +221,8 @@ class FixturesFragment : Fragment() {
         binding.fixtureDateFive.setOnClickListener {
             var mapDate: HashMap<String, String> = HashMap()
             mapDate["api_token"] = ApiTokens.FIXTURES_API
-            mapDate["include"] = "participants"
+            mapDate["include"] = "participants;scores"
+            viewModel.jobCancelled()
             var date = getProperDateFormatForTheApiCall(1)
             viewModel.getMatchesBySpecificDate(date, date, mapDate)
             viewModel.getLogosOfHomeClubFromSpecificDate()
@@ -223,7 +233,8 @@ class FixturesFragment : Fragment() {
         binding.fixtureDateSix.setOnClickListener {
             var mapDate: HashMap<String, String> = HashMap()
             mapDate["api_token"] = ApiTokens.FIXTURES_API
-            mapDate["include"] = "participants"
+            mapDate["include"] = "participants;scores"
+            viewModel.jobCancelled()
             var date = getProperDateFormatForTheApiCall(2)
             viewModel.getMatchesBySpecificDate(date, date, mapDate)
             viewModel.getLogosOfHomeClubFromSpecificDate()
@@ -234,7 +245,8 @@ class FixturesFragment : Fragment() {
         binding.fixtureDateSeven.setOnClickListener {
             var mapDate: HashMap<String, String> = HashMap()
             mapDate["api_token"] = ApiTokens.FIXTURES_API
-            mapDate["include"] = "participants"
+            mapDate["include"] = "participants;scores"
+            viewModel.jobCancelled()
             var date = getProperDateFormatForTheApiCall(3)
             viewModel.getMatchesBySpecificDate(date, date, mapDate)
             viewModel.getLogosOfHomeClubFromSpecificDate()
@@ -249,7 +261,6 @@ class FixturesFragment : Fragment() {
         var calendar = Calendar.getInstance()
         calendar.add(Calendar.DATE, amount)
         var dateFormat = SimpleDateFormat("yyyy-MM-dd")
-        var date = dateFormat.format(calendar.time)
-        return date
+        return dateFormat.format(calendar.time)
     }
 }

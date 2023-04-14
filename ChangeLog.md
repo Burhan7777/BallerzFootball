@@ -2,7 +2,17 @@ CHANGELOG
 -----------------------
 -----------------------
 
-ver 1.2.1 (13th April)
+ver 1..(to be launched)
+------------------------------
+--> Write comments are over the code
+--> Fixed the crash on getting no matches data
+--> Dates are working with the spinner
+
+ver 1.3.1 (14th April 2023)
+-------------------------------
+--> Scores can be seen now
+
+ver 1.2.1 (13th April 2023)
 -------------------------------
 --> All dates are working now
 

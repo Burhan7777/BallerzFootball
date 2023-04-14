@@ -49,6 +49,8 @@ class FixturesAdapter(context: Context) :
         val fixtureTeamAwayImage: ImageView = view.findViewById(R.id.fixtureAwayTeamImage)
         val fixtureHomeTeamName: TextView = view.findViewById(R.id.fixtureHomeTeamName)
         val fixtureAwayTeamName: TextView = view.findViewById(R.id.fixtureAwayTeamName)
+        val fixtureHomeScore: TextView = view.findViewById(R.id.fixtureHomeScore)
+        val fixtureAwayScore: TextView = view.findViewById(R.id.fixtureAwayScore)
         val fixtureTime: TextView = view.findViewById(R.id.fixtureTime)
 
     }
@@ -62,7 +64,35 @@ class FixturesAdapter(context: Context) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
 
-        holder.fixtureTime.text = changeTheDateFormatOfReceivedTime(list!![position].time)
+        // holder.fixtureTime.text = changeTheDateFormatOfReceivedTime(list!![position].time)
+
+
+        if (list?.get(position)?.scores?.size!! > 0) {
+            for (i in list!![position].scores.indices) {
+
+                if (list!![position].scores[i].description == "CURRENT") {
+                    holder.fixtureAwayScore.visibility = View.VISIBLE
+                    holder.fixtureHomeScore.visibility = View.VISIBLE
+                    holder.fixtureTime.visibility = View.INVISIBLE
+
+                    if (list!![position].scores[i].score.participant == "home")
+                        holder.fixtureHomeScore.text = list!![position].scores[i].score.goals
+                    else if (list!![position].scores[i].score.participant == "away")
+                        holder.fixtureAwayScore.text = list!![position].scores[i].score.goals
+
+                    if (list!![position].scores[i].score.participant == "home")
+                        holder.fixtureHomeScore.text = list!![position].scores[i].score.goals
+                    else (list!![position].scores[i].score.participant == "away")
+                    holder.fixtureAwayScore.text = list!![position].scores[i].score.goals
+                }
+            }
+        } else {
+            holder.fixtureTime.visibility = View.VISIBLE
+            holder.fixtureHomeScore.visibility = View.INVISIBLE
+            holder.fixtureAwayScore.visibility = View.INVISIBLE
+            holder.fixtureTime.text = changeTheDateFormatOfReceivedTime(list!![position].time)
+
+        }
 
         if (list!![position].participants[0].meta.location == "home")
             holder.fixtureHomeTeamName.text = list!![position].participants[0].name
@@ -81,7 +111,7 @@ class FixturesAdapter(context: Context) :
             Glide.with(context).load(logosOfAwayClubs[position]).centerInside()
                 .into(holder.fixtureTeamAwayImage)
         } catch (e: java.lang.IndexOutOfBoundsException) {
-            Toast.makeText(context, "Chill...too many requests", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Chill3...too many requests", Toast.LENGTH_SHORT).show()
         }
     }
 

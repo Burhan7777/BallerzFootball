@@ -47,15 +47,42 @@
                 app:layout_constraintTop_toBottomOf="@+id/fixtureHomeTeamImage" />
 
             <TextView
+                android:id="@+id/fixtureHomeScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="score Home"
+                android:visibility="invisible"
+                android:textSize="25dp"
+                app:layout_constraintBottom_toBottomOf="@+id/fixtureHomeTeamName"
+                app:layout_constraintStart_toEndOf="@+id/fixtureHomeTeamImage"
+                app:layout_constraintTop_toTopOf="@+id/fixtureHomeTeamImage"
+                app:layout_constraintEnd_toStartOf="@+id/fixtureTime"
+                android:layout_marginStart="30dp"/>
+
+            <TextView
                 android:id="@+id/fixtureTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Time"
                 android:textSize="15dp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/fixtureAwayTeamImage"
                 app:layout_constraintStart_toEndOf="@+id/fixtureHomeTeamImage"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/fixtureAwayScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="score Away"
+                android:textSize="25dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/fixtureAwayTeamName"
+                app:layout_constraintEnd_toStartOf="@+id/fixtureAwayTeamImage"
+                app:layout_constraintTop_toTopOf="@+id/fixtureAwayTeamImage"
+                app:layout_constraintStart_toEndOf="@+id/fixtureTime"
+                android:layout_marginEnd="30dp"/>
 
             <ImageView
                 android:id="@+id/fixtureAwayTeamImage"

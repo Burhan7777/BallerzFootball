@@ -12,6 +12,7 @@ import com.pzbproduction.ballerzfootball.model.ApiDataClass
 import com.pzbproduction.ballerzfootball.model.Participants
 import com.pzbproduction.ballerzfootball.model.Repository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class FixturesFragmentViewModel(application: Application) : AndroidViewModel(application) {
@@ -30,6 +31,8 @@ class FixturesFragmentViewModel(application: Application) : AndroidViewModel(app
     private var isLoading: MutableLiveData<Boolean> = MutableLiveData()
     private var hasLoaded: MutableLiveData<Boolean> = MutableLiveData()
     private var repository = Repository(application)
+
+    private var job1: Job? = null
 
     val getApiDataClass: LiveData<ArrayList<ApiDataClass>> get() = apiDataClass
     val getLogosOfHomeClubs: LiveData<ArrayList<Bitmap>> get() = logosOfHomeClubs
@@ -81,7 +84,7 @@ class FixturesFragmentViewModel(application: Application) : AndroidViewModel(app
     }
 
     fun getMatchesBySpecificDate(startDate: String, endDate: String, map: HashMap<String, String>) {
-        viewModelScope.launch(Dispatchers.IO) {
+        job1 = viewModelScope.launch(Dispatchers.IO) {
             matchesBySpecificDate.postValue(
                 repository.getMatchBySpecificDate(
                     startDate,
@@ -90,6 +93,7 @@ class FixturesFragmentViewModel(application: Application) : AndroidViewModel(app
                 )
             )
         }
+//        Log.i("random", matchesBySpecificDate.value.toString())
     }
 
 
@@ -100,6 +104,10 @@ class FixturesFragmentViewModel(application: Application) : AndroidViewModel(app
 
     fun getHasLoaded() {
         hasLoaded.postValue(repository.getHasLoaded())
+    }
+
+    fun jobCancelled() {
+        job1?.cancel()
     }
 
 
