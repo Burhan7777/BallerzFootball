@@ -73,9 +73,9 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:text="date"
+                app:cornerRadius="2dp"
                 android:textColor="#d2d2d2"
-                app:backgroundTint="#333333"
-                app:cornerRadius="10dp"
+                app:backgroundTint="#222222"
                 app:rippleColor="@color/teal_200"/>
 
             <com.google.android.material.button.MaterialButton
@@ -85,8 +85,8 @@
                 android:layout_marginEnd="10dp"
                 android:text="date"
                 android:textColor="#d2d2d2"
-                app:backgroundTint="#333333"
-                app:cornerRadius="10dp"
+                app:cornerRadius="2dp"
+                app:backgroundTint="#222222"
                 app:rippleColor="@color/teal_200"/>
 
             <com.google.android.material.button.MaterialButton
@@ -96,8 +96,8 @@
                 android:layout_marginEnd="10dp"
                 android:text="date"
                 android:textColor="#d2d2d2"
-                app:backgroundTint="#333333"
-                app:cornerRadius="10dp"
+                app:backgroundTint="#222222"
+                app:cornerRadius="2dp"
                 app:rippleColor="@color/teal_200"/>
 
             <com.google.android.material.button.MaterialButton
@@ -107,8 +107,8 @@
                 android:layout_marginEnd="10dp"
                 android:text="date"
                 android:textColor="#d2d2d2"
-                app:backgroundTint="#333333"
-                app:cornerRadius="10dp"
+                app:backgroundTint="#222222"
+                app:cornerRadius="2dp"
                 app:rippleColor="@color/teal_200"/>
 
             <com.google.android.material.button.MaterialButton
@@ -118,8 +118,8 @@
                 android:layout_marginEnd="10dp"
                 android:text="date"
                 android:textColor="#d2d2d2"
-                app:backgroundTint="#333333"
-                app:cornerRadius="10dp"
+                app:backgroundTint="#222222"
+                app:cornerRadius="2dp"
                 app:rippleColor="@color/teal_200"/>
 
             <com.google.android.material.button.MaterialButton
@@ -129,8 +129,8 @@
                 android:layout_marginEnd="10dp"
                 android:text="date"
                 android:textColor="#d2d2d2"
-                app:backgroundTint="#333333"
-                app:cornerRadius="10dp"
+                app:backgroundTint="#222222"
+                app:cornerRadius="2dp"
                 app:rippleColor="@color/teal_200"/>
 
             <com.google.android.material.button.MaterialButton
@@ -140,8 +140,8 @@
                 android:layout_marginEnd="10dp"
                 android:text="date"
                 android:textColor="#d2d2d2"
-                app:backgroundTint="#333333"
-                app:cornerRadius="10dp"
+                app:cornerRadius="2dp"
+                app:backgroundTint="#222222"
                 app:rippleColor="@color/teal_200"/>
         </LinearLayout>
     </HorizontalScrollView>

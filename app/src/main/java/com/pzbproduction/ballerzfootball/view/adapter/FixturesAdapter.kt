@@ -1,21 +1,26 @@
 package com.pzbproduction.ballerzfootball.view.adapter
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
-import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.pzbproduction.ballerzfootball.R
 import com.pzbproduction.ballerzfootball.model.ApiDataClass
+import com.pzbproduction.ballerzfootball.view.activities.MatchDetailActivity
+import com.pzbproduction.ballerzfootball.view.fragments.MatchDetailsFragment
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
 
 class FixturesAdapter(context: Context) :
     RecyclerView.Adapter<FixturesAdapter.ViewHolder>() {
@@ -45,6 +50,7 @@ class FixturesAdapter(context: Context) :
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val fixtureCardView: CardView = view.findViewById(R.id.fixtureCardView)
         val fixtureTeamHomeImage: ImageView = view.findViewById(R.id.fixtureHomeTeamImage)
         val fixtureTeamAwayImage: ImageView = view.findViewById(R.id.fixtureAwayTeamImage)
         val fixtureHomeTeamName: TextView = view.findViewById(R.id.fixtureHomeTeamName)
@@ -52,6 +58,7 @@ class FixturesAdapter(context: Context) :
         val fixtureHomeScore: TextView = view.findViewById(R.id.fixtureHomeScore)
         val fixtureAwayScore: TextView = view.findViewById(R.id.fixtureAwayScore)
         val fixtureTime: TextView = view.findViewById(R.id.fixtureTime)
+
 
     }
 
@@ -62,9 +69,6 @@ class FixturesAdapter(context: Context) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
-
-        // holder.fixtureTime.text = changeTheDateFormatOfReceivedTime(list!![position].time)
 
 
         if (list?.get(position)?.scores?.size!! > 0) {
@@ -106,12 +110,26 @@ class FixturesAdapter(context: Context) :
 
         try {
             Glide.with(context).load(logosOfHomeClubs[position]).centerInside()
-                .into(holder.fixtureTeamHomeImage)
+                .diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.fixtureTeamHomeImage)
 
             Glide.with(context).load(logosOfAwayClubs[position]).centerInside()
-                .into(holder.fixtureTeamAwayImage)
+                .diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.fixtureTeamAwayImage)
         } catch (e: java.lang.IndexOutOfBoundsException) {
             Toast.makeText(context, "Chill3...too many requests", Toast.LENGTH_SHORT).show()
+        }
+
+        holder.fixtureCardView.setOnClickListener {
+           /* var compat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                Activity(),
+                holder.fixtureTeamHomeImage,
+                "homeTransition"
+            )*/
+            val intent = Intent(context, MatchDetailActivity::class.java)
+            intent.putExtra("homeLogo", logosOfHomeClubs[position])
+            intent.putExtra("awayLogo", logosOfAwayClubs[position])
+            intent.putExtra("homeTeam", holder.fixtureHomeTeamName.text)
+            intent.putExtra("awayTeam", holder.fixtureAwayTeamName.text)
+            context.startActivity(intent)
         }
     }
 
@@ -123,7 +141,6 @@ class FixturesAdapter(context: Context) :
         var originalDataFormat = SimpleDateFormat("yyyy-mm-dd HH:mm:ss")
         var date = originalDataFormat.parse(time)
         var targetDataFormat = SimpleDateFormat("HH:mm")
-        var finalTime = targetDataFormat.format(date)
-        return finalTime
+        return targetDataFormat.format(date)
     }
 }

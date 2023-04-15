@@ -12,9 +12,10 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="5dp"
+        android:background="@drawable/ripple_color_card_background"
         android:elevation="20dp"
-        app:cardBackgroundColor="#333333"
-        app:cardCornerRadius="15dp"
+        app:cardBackgroundColor="#2d2d2d"
+        app:cardCornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -29,6 +30,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:elevation="10dp"
+                android:transitionName="homeTransition"
                 android:src="@drawable/ic_launcher_background"
                 app:layout_constraintBottom_toTopOf="@+id/fixtureHomeTeamName"
                 app:layout_constraintEnd_toStartOf="@+id/fixtureTime"
@@ -50,14 +52,14 @@
                 android:id="@+id/fixtureHomeScore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
                 android:text="score Home"
-                android:visibility="invisible"
                 android:textSize="25dp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/fixtureHomeTeamName"
-                app:layout_constraintStart_toEndOf="@+id/fixtureHomeTeamImage"
-                app:layout_constraintTop_toTopOf="@+id/fixtureHomeTeamImage"
                 app:layout_constraintEnd_toStartOf="@+id/fixtureTime"
-                android:layout_marginStart="30dp"/>
+                app:layout_constraintStart_toEndOf="@+id/fixtureHomeTeamImage"
+                app:layout_constraintTop_toTopOf="@+id/fixtureHomeTeamImage" />
 
             <TextView
                 android:id="@+id/fixtureTime"
@@ -75,20 +77,21 @@
                 android:id="@+id/fixtureAwayScore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
                 android:text="score Away"
                 android:textSize="25dp"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/fixtureAwayTeamName"
                 app:layout_constraintEnd_toStartOf="@+id/fixtureAwayTeamImage"
-                app:layout_constraintTop_toTopOf="@+id/fixtureAwayTeamImage"
                 app:layout_constraintStart_toEndOf="@+id/fixtureTime"
-                android:layout_marginEnd="30dp"/>
+                app:layout_constraintTop_toTopOf="@+id/fixtureAwayTeamImage" />
 
             <ImageView
                 android:id="@+id/fixtureAwayTeamImage"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:elevation="10dp"
+                android:transitionName="awayTransition"
                 android:src="@drawable/ic_launcher_background"
                 app:layout_constraintBottom_toTopOf="@+id/fixtureAwayTeamName"
                 app:layout_constraintEnd_toEndOf="parent"

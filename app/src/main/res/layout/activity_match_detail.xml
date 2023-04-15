@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activities.MatchDetailActivity">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/DetailMatchCardView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/ripple_color_card_background"
+        android:elevation="20dp"
+        android:visibility="invisible"
+        app:cardBackgroundColor="#2d2d2d"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/DetailMatchHomeTeamImage"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="50dp"
+                android:elevation="10dp"
+                android:src="@drawable/ic_launcher_background"
+                android:transitionName="homeTransition"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/DetailMatchHomeTeamName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Liverpool"
+                android:textColor="@color/white"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/DetailMatchHomeTeamImage"
+                app:layout_constraintStart_toStartOf="@+id/DetailMatchHomeTeamImage"
+                app:layout_constraintTop_toBottomOf="@+id/DetailMatchHomeTeamImage" />
+
+            <TextView
+                android:id="@+id/DetailMatchHomeScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:text="score Home"
+                android:textSize="25dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/DetailMatchHomeTeamName"
+                app:layout_constraintEnd_toStartOf="@+id/DetailMatchTime"
+                app:layout_constraintStart_toEndOf="@+id/DetailMatchHomeTeamImage"
+                app:layout_constraintTop_toTopOf="@+id/DetailMatchHomeTeamImage" />
+
+            <TextView
+                android:id="@+id/DetailMatchTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time"
+                android:textSize="15dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/DetailMatchAwayTeamImage"
+                app:layout_constraintStart_toEndOf="@+id/DetailMatchHomeTeamImage"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/DetailMatchAwayScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:text="score Away"
+                android:textSize="25dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/DetailMatchAwayTeamName"
+                app:layout_constraintEnd_toStartOf="@+id/DetailMatchAwayTeamImage"
+                app:layout_constraintStart_toEndOf="@+id/DetailMatchTime"
+                app:layout_constraintTop_toTopOf="@+id/DetailMatchAwayTeamImage" />
+
+
+            <ImageView
+                android:id="@+id/DetailMatchAwayTeamImage"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginEnd="50dp"
+                android:elevation="10dp"
+                android:src="@drawable/ic_launcher_background"
+                android:transitionName="awayTransition"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/DetailMatchAwayTeamName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Man u"
+                android:textColor="@color/white"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/DetailMatchAwayTeamImage"
+                app:layout_constraintStart_toStartOf="@+id/DetailMatchAwayTeamImage"
+                app:layout_constraintTop_toBottomOf="@+id/DetailMatchAwayTeamImage" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/matchDetailTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_margin="20dp"
+        android:background="#2d2d2d"
+        android:elevation="20dp"
+        app:tabIndicatorFullWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DetailMatchCardView"
+        app:tabGravity="start"
+        app:tabIndicator="@drawable/tab_indicator"
+        app:tabIndicatorAnimationMode="elastic"
+        app:tabIndicatorGravity="stretch"
+        app:tabMode="fixed"
+        app:tabIndicatorAnimationDuration="1000"
+        app:tabIndicatorColor="@color/teal_200"
+        app:tabRippleColor="@color/teal_200"
+        app:tabSelectedTextColor="@color/white" />
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/matchDetailViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/matchDetailTabLayout"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

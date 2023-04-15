@@ -1,6 +1,7 @@
 package com.pzbproduction.ballerzfootball.view.fragments
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.pzbproduction.ballerzfootball.R
 import com.pzbproduction.ballerzfootball.databinding.FragmentFixturesBinding
 import com.pzbproduction.ballerzfootball.model.ApiTokens
 import com.pzbproduction.ballerzfootball.view.adapter.FixturesAdapter
@@ -137,6 +139,7 @@ class FixturesFragment : Fragment() {
         binding.fixtureDateFive.text = getDateOnButtons(1)
         binding.fixtureDateSix.text = getDateOnButtons(2)
         binding.fixtureDateSeven.text = getDateOnButtons(3)
+
 
     }
 
