@@ -26,5 +26,9 @@ interface ApiInterface {
         @QueryMap map: HashMap<String, String>
     ): Response<ApiDataClassWrapper<ApiDataClass>>
 
+    @GET("fixtures/{id}")
+    suspend fun getLineUps(@Path("id") matchId: String, @QueryMap map: HashMap<String, String>):
+            Response<LineUp>
+
 
 }

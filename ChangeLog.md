@@ -8,6 +8,10 @@ ver 1..(to be launched)
 --> Fixed the crash on getting no matches data
 --> Dates are working with the spinner
 
+ver 1.3.3 ALPHA (15th April 2023)
+------------------------------
+--> LineUps are working now
+
 ver 1.3.2 ALPHA (15th April 2023)
 ------------------------------
 --> Match detail activity initial setup

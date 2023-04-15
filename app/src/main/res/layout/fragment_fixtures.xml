@@ -75,7 +75,7 @@
                 android:text="date"
                 app:cornerRadius="2dp"
                 android:textColor="#d2d2d2"
-                app:backgroundTint="#222222"
+                app:backgroundTint="#2d2d2d"
                 app:rippleColor="@color/teal_200"/>
 
             <com.google.android.material.button.MaterialButton
@@ -86,7 +86,7 @@
                 android:text="date"
                 android:textColor="#d2d2d2"
                 app:cornerRadius="2dp"
-                app:backgroundTint="#222222"
+                app:backgroundTint="#2d2d2d"
                 app:rippleColor="@color/teal_200"/>
 
             <com.google.android.material.button.MaterialButton
@@ -96,7 +96,7 @@
                 android:layout_marginEnd="10dp"
                 android:text="date"
                 android:textColor="#d2d2d2"
-                app:backgroundTint="#222222"
+                app:backgroundTint="#2d2d2d"
                 app:cornerRadius="2dp"
                 app:rippleColor="@color/teal_200"/>
 
@@ -107,7 +107,7 @@
                 android:layout_marginEnd="10dp"
                 android:text="date"
                 android:textColor="#d2d2d2"
-                app:backgroundTint="#222222"
+                app:backgroundTint="#2d2d2d"
                 app:cornerRadius="2dp"
                 app:rippleColor="@color/teal_200"/>
 
@@ -118,7 +118,7 @@
                 android:layout_marginEnd="10dp"
                 android:text="date"
                 android:textColor="#d2d2d2"
-                app:backgroundTint="#222222"
+                app:backgroundTint="#2d2d2d"
                 app:cornerRadius="2dp"
                 app:rippleColor="@color/teal_200"/>
 
@@ -129,7 +129,7 @@
                 android:layout_marginEnd="10dp"
                 android:text="date"
                 android:textColor="#d2d2d2"
-                app:backgroundTint="#222222"
+                app:backgroundTint="#2d2d2d"
                 app:cornerRadius="2dp"
                 app:rippleColor="@color/teal_200"/>
 

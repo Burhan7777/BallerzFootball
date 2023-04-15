@@ -6,12 +6,18 @@ data class ApiDataClassWrapper<T> constructor(
     val data: List<T>
 )
 
+data class LineUp constructor(
+    val data: Data
+)
+
 
 data class ApiDataClass constructor(
+    val id: String,
     @SerializedName("starting_at")
     val time: String,
     var participants: List<Participants>,
-    var scores: List<Scores>
+    var scores: List<Scores>,
+    var lineups: List<LineUps>
 )
 
 data class Participants constructor(
@@ -34,3 +40,24 @@ data class Score constructor(
     var goals: String,
     var participant: String
 )
+
+data class LineUps constructor(
+    @SerializedName("jersey_number")
+    val jerseyNumber: String,
+    @SerializedName("formation_field")
+    val formationField: String,
+    @SerializedName("formation_position")
+    val formationPosition: String,
+    @SerializedName("player_name")
+    val playerName: String
+)
+
+class Data constructor(
+    val id: String,
+  //  @SerializedName("starting_at")
+   // val time: String,
+   // var participants: List<Participants>,
+   // var scores: List<Scores>,
+    var lineups: List<LineUps>
+)
+

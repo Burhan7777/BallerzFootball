@@ -8,10 +8,8 @@ import android.widget.Toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
 
-class Repository(context: Context) {
+class FixtureRepository(context: Context) {
 
     private var context: Context
 

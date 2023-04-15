@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.DecelerateInterpolator
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -33,20 +34,36 @@ class MatchDetailActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[MatchDetailsActivityViewModel::class.java]
 
-        var intent = intent
-        var homeLogo: Bitmap = intent.getParcelableExtra("homeLogo")!!
-        var awayLogo: Bitmap = intent.getParcelableExtra("awayLogo")!!
-        var homeTeam = intent.getStringExtra("homeTeam")
-        var awayTeam = intent.getStringExtra("awayTeam")
+        val intent = intent
+        val homeLogo: Bitmap = intent.getParcelableExtra("homeLogo")!!
+        val awayLogo: Bitmap = intent.getParcelableExtra("awayLogo")!!
+        val homeTeam = intent.getStringExtra("homeTeam")
+        val awayTeam = intent.getStringExtra("awayTeam")
+        val matchId = intent.getStringExtra("matchId")
+        var time = intent.getStringExtra("time")
+        var homeScore = intent.getStringExtra("homeScore")
+        var awayScore = intent.getStringExtra("awayScore")
 
-        Glide.with(this).load(homeLogo).centerInside()
-            .diskCacheStrategy(DiskCacheStrategy.ALL).into(binding.DetailMatchHomeTeamImage)
+        binding.DetailMatchHomeTeamImage.setImageBitmap(homeLogo)
+        binding.DetailMatchAwayTeamImage.setImageBitmap(awayLogo)
 
-        Glide.with(this).load(awayLogo).centerInside()
-            .diskCacheStrategy(DiskCacheStrategy.ALL).into(binding.DetailMatchAwayTeamImage)
 
         binding.DetailMatchHomeTeamName.text = homeTeam
         binding.DetailMatchAwayTeamName.text = awayTeam
+
+
+        if (time == "") {
+            binding.DetailMatchAwayScore.visibility = View.VISIBLE
+            binding.DetailMatchAwayScore.visibility = View.VISIBLE
+            binding.DetailMatchHomeScore.text = homeScore
+            binding.DetailMatchAwayScore.text = awayScore
+        } else {
+            binding.DetailMatchTime.visibility = View.VISIBLE
+            binding.DetailMatchTime.text = time
+
+        }
+
+
 
         binding.DetailMatchCardView.postDelayed(Runnable {
             createRevealAnimationOnCardView()

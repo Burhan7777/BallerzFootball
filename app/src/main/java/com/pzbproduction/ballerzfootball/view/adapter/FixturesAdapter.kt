@@ -109,26 +109,36 @@ class FixturesAdapter(context: Context) :
             holder.fixtureHomeTeamName.text = list!![position].participants[1].name
 
         try {
-            Glide.with(context).load(logosOfHomeClubs[position]).centerInside()
-                .diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.fixtureTeamHomeImage)
+            /* Glide.with(context).load(logosOfHomeClubs[position]).centerInside()
+                 .diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.fixtureTeamHomeImage)*/
+            holder.fixtureTeamHomeImage.setImageBitmap(logosOfHomeClubs[position])
 
-            Glide.with(context).load(logosOfAwayClubs[position]).centerInside()
-                .diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.fixtureTeamAwayImage)
+            /* Glide.with(context).load(logosOfAwayClubs[position]).centerInside()
+                 .diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.fixtureTeamAwayImage)*/
+
+            holder.fixtureTeamAwayImage.setImageBitmap(logosOfAwayClubs[position])
+
+
         } catch (e: java.lang.IndexOutOfBoundsException) {
             Toast.makeText(context, "Chill3...too many requests", Toast.LENGTH_SHORT).show()
         }
 
         holder.fixtureCardView.setOnClickListener {
-           /* var compat = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                Activity(),
-                holder.fixtureTeamHomeImage,
-                "homeTransition"
-            )*/
+            /* var compat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                 Activity(),
+                 holder.fixtureTeamHomeImage,
+                 "homeTransition"
+             )*/
             val intent = Intent(context, MatchDetailActivity::class.java)
             intent.putExtra("homeLogo", logosOfHomeClubs[position])
             intent.putExtra("awayLogo", logosOfAwayClubs[position])
             intent.putExtra("homeTeam", holder.fixtureHomeTeamName.text)
             intent.putExtra("awayTeam", holder.fixtureAwayTeamName.text)
+            intent.putExtra("matchId", list!![position].id)
+            intent.putExtra("time", holder.fixtureTime.text.toString())
+            intent.putExtra("homeScore", holder.fixtureHomeScore.text.toString())
+            intent.putExtra("awayScore", holder.fixtureAwayScore.text.toString())
+
             context.startActivity(intent)
         }
     }

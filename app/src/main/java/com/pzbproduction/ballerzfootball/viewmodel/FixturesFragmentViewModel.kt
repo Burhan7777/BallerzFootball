@@ -2,15 +2,12 @@ package com.pzbproduction.ballerzfootball.viewmodel
 
 import android.app.Application
 import android.graphics.Bitmap
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pzbproduction.ballerzfootball.model.ApiDataClass
-import com.pzbproduction.ballerzfootball.model.Participants
-import com.pzbproduction.ballerzfootball.model.Repository
+import com.pzbproduction.ballerzfootball.model.FixtureRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -30,7 +27,7 @@ class FixturesFragmentViewModel(application: Application) : AndroidViewModel(app
         MutableLiveData()
     private var isLoading: MutableLiveData<Boolean> = MutableLiveData()
     private var hasLoaded: MutableLiveData<Boolean> = MutableLiveData()
-    private var repository = Repository(application)
+    private var repository = FixtureRepository(application)
 
     private var job1: Job? = null
 
