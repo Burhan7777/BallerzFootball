@@ -16,7 +16,7 @@
         android:elevation="20dp"
         android:clickable="true"
         app:cardBackgroundColor="#2d2d2d"
-        app:cardCornerRadius="5dp"
+        app:cardCornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

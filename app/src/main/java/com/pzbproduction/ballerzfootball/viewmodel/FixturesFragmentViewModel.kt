@@ -63,13 +63,13 @@ class FixturesFragmentViewModel(application: Application) : AndroidViewModel(app
 
     fun getLogosOfHomeClubFromSpecificDate() {
         viewModelScope.launch(Dispatchers.IO) {
-            logosOfHomeClubsFromSpecificDate.postValue(repository.getLogosOfHomeClubsFromSpecificDate())
+            logosOfHomeClubsFromSpecificDate.postValue(repository.logosOfHomeClubsFromSpecificDate)
         }
     }
 
     fun getLogosOfAwayClubFromSpecificDate() {
         viewModelScope.launch(Dispatchers.IO) {
-            logosOfAwayClubsFromSpecificDate.postValue(repository.getLogosOfAwayClubsFromSpecificDate())
+            logosOfAwayClubsFromSpecificDate.postValue(repository.logosOfAwayClubsFromSpecificDate)
         }
     }
 

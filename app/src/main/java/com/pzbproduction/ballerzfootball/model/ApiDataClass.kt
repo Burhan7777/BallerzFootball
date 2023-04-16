@@ -6,6 +6,8 @@ data class ApiDataClassWrapper<T> constructor(
     val data: List<T>
 )
 
+// This has been created as when we hit the URL with only id it returns "data" object
+// rather than the "data" array and hence we can't use "ApiDataClassWrapper".
 data class LineUp constructor(
     val data: Data
 )

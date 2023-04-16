@@ -22,8 +22,8 @@ class FixtureRepository(context: Context) {
     private var apiDataClass: ArrayList<ApiDataClass>? = ArrayList()
     private var logosOfHomeClubs: ArrayList<Bitmap>? = ArrayList()
     private var logosOfAwayClubs: ArrayList<Bitmap>? = ArrayList()
-    private var logosOfHomeClubsFromSpecificDate: ArrayList<Bitmap>? = ArrayList()
-    private var logosOfAwayClubsFromSpecificDate: ArrayList<Bitmap>? = ArrayList()
+    var logosOfHomeClubsFromSpecificDate: ArrayList<Bitmap>? = ArrayList()
+    var logosOfAwayClubsFromSpecificDate: ArrayList<Bitmap>? = ArrayList()
     private var apiDataClassFromSpinner: ArrayList<ApiDataClass>? = ArrayList()
     private var matchBySpecificDate: ArrayList<ApiDataClass>? = ArrayList()
     private var isLoading = false
@@ -48,6 +48,10 @@ class FixtureRepository(context: Context) {
         }
         return apiDataClass
     }
+
+    // Each "data" array returns two objects of "participants" and these two objects
+    // randomly refer to the home team and the away team. Hence here we check for
+    // both "participants" as anyone can contain home and away participant details.
 
     suspend fun getLogosOfHomeClubs(): ArrayList<Bitmap>? {
         for (i in apiDataClass!!.indices) {
@@ -76,6 +80,8 @@ class FixtureRepository(context: Context) {
         // Log.i("sizeImages", homeImagesOfClubs?.size.toString())
         return logosOfHomeClubs
     }
+
+    // Similarly here we search for the away team logos in both objects of "participants"
 
     suspend fun getLogosOfAwayClubs(): ArrayList<Bitmap>? {
         for (i in apiDataClass!!.indices) {
@@ -125,26 +131,29 @@ class FixtureRepository(context: Context) {
         map: HashMap<String, String>
     ): ArrayList<ApiDataClass>? {
 
-
+        matchBySpecificDate = ArrayList()
         matchBySpecificDate?.clear()
+
 
         logosOfAwayClubsFromSpecificDate?.clear()
         logosOfHomeClubsFromSpecificDate?.clear()
 
 
-        Log.i("sizeArray", matchBySpecificDate?.size.toString())
+        Log.i("sizeArray", matchBySpecificDate.toString())
 
         var apiCall = apiInterface?.getMatchesBySpecificDate(startDate, endDate, map)
 
         if (apiCall!!.isSuccessful) {
             matchBySpecificDate = apiCall.body()?.data?.toCollection(ArrayList())
 
-            if (matchBySpecificDate != null) {
-                getLogosOfAwayClubsFromSpecificDate()
-                getLogosOfHomeClubsFromSpecificDate()
-            }
         }
-        Log.i("size", matchBySpecificDate?.size.toString())
+
+        if (matchBySpecificDate != null) {
+            getLogosOfAwayClubsFromSpecificDate()
+            getLogosOfHomeClubsFromSpecificDate()
+        }
+
+        //  Log.i("size", matchBySpecificDate?.size.toString())
 
 
         return matchBySpecificDate

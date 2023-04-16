@@ -138,10 +138,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:text="date"
-                android:textColor="#d2d2d2"
+                android:backgroundTint="#2d2d2d"
                 app:cornerRadius="2dp"
-                app:backgroundTint="#222222"
+                android:textColor="#d2d2d2"
                 app:rippleColor="@color/teal_200"/>
         </LinearLayout>
     </HorizontalScrollView>

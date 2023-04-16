@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.button.MaterialButton
 import com.pzbproduction.ballerzfootball.R
 import com.pzbproduction.ballerzfootball.databinding.FragmentFixturesBinding
 import com.pzbproduction.ballerzfootball.model.ApiTokens
@@ -24,6 +25,7 @@ class FixturesFragment : Fragment() {
     private lateinit var binding: FragmentFixturesBinding
     private lateinit var adapter: FixturesAdapter
     private lateinit var viewModel: FixturesFragmentViewModel
+    private lateinit var buttonId : MaterialButton
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,6 +37,9 @@ class FixturesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        buttonId = MaterialButton(requireContext()) // creates the button id
+        buttonId = binding.fixtureDateFour // button id's value is first set to "today" button
 
         var map: HashMap<String, String> = HashMap()
         map["api_token"] = ApiTokens.FIXTURES_API
@@ -50,6 +55,8 @@ class FixturesFragment : Fragment() {
 
         //   Log.i("viewmodel", viewModel.getLogosOfHomeClubs.toString())
 
+        binding.fixtureDateFour.setBackgroundColor(resources.getColor(R.color.teal_200)) // App starts with "today" button in selected mode
+
 
         viewModel.getIsLoading.observe(viewLifecycleOwner, Observer {
             if (it) binding.fixtureProgressBar.visibility = View.VISIBLE
@@ -63,7 +70,7 @@ class FixturesFragment : Fragment() {
 
         })
 
-        if (viewModel.getApiDataClass.value != null) {
+     //   if (viewModel.getApiDataClass.value != null) {
             viewModel.getApiDataClass.observe(viewLifecycleOwner, Observer {
                 adapter.updateList(it)
                 //  Log.i("sizeFragment", it.toString())
@@ -81,26 +88,26 @@ class FixturesFragment : Fragment() {
                 adapter.updateList(it)
             })
 
-        }
+     //   }
 
-       // Log.i("random", viewModel.getMatchesBySpecificDate.value.toString())
+        // Log.i("random", viewModel.getMatchesBySpecificDate.value.toString())
 
-       // if (viewModel.getMatchesBySpecificDate.value != null) {
-            viewModel.getMatchesBySpecificDate.observe(viewLifecycleOwner, Observer {
-                adapter.updateList(it)
-           //     Log.i("specific", it.size.toString())
-            })
+        // if (viewModel.getMatchesBySpecificDate.value != null) {
+        viewModel.getMatchesBySpecificDate.observe(viewLifecycleOwner, Observer {
+            adapter.updateList(it)
+            //     Log.i("specific", it.size.toString())
+        })
 
-            viewModel.getLogosOfHomeClubsFromSpecificDate.observe(viewLifecycleOwner, Observer {
-                adapter.getLogosOfHomeClubs(it)
+        viewModel.getLogosOfHomeClubsFromSpecificDate.observe(viewLifecycleOwner, Observer {
+            adapter.getLogosOfHomeClubs(it)
             //    Log.i("specificHome", it.size.toString())
-            })
+        })
 
-            viewModel.getLogosOfAwayClubsFromSpecificDate.observe(viewLifecycleOwner, Observer {
-                adapter.getLogosOfAwayClubs(it)
+        viewModel.getLogosOfAwayClubsFromSpecificDate.observe(viewLifecycleOwner, Observer {
+            adapter.getLogosOfAwayClubs(it)
             //    Log.i("specificAway", it.size.toString())
-            })
-      // }
+        })
+        // }
 
 
         binding.fixturesRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -108,6 +115,8 @@ class FixturesFragment : Fragment() {
         binding.fixturesRecyclerView.adapter = adapter
 
         binding.fixtureProgressBar.visibility = View.INVISIBLE
+
+        // gets the position of the spinner and calls the API for particular league
 
         binding.fixtureAutocomplete.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {
@@ -153,6 +162,9 @@ class FixturesFragment : Fragment() {
 
     }
 
+    // calendar object returns month in digits. This method basically turns
+    // these digits into month name to be displayed on buttons
+
     private fun getDescriptiveMonth(date: String): String {
         var month = when (date.substring(3, 5)) {
             "01" -> return "JAN"
@@ -172,6 +184,9 @@ class FixturesFragment : Fragment() {
         return month
     }
 
+    // setOnClickListener of different button dates which
+    // gets the matches of a particular date
+
     private fun sendApiCallsFromDifferentDates() {
         binding.fixtureDateOne.setOnClickListener {
             var mapDate: HashMap<String, String> = HashMap()
@@ -182,6 +197,13 @@ class FixturesFragment : Fragment() {
             viewModel.getMatchesBySpecificDate(date, date, mapDate)
             viewModel.getLogosOfHomeClubFromSpecificDate()
             viewModel.getLogosOfAwayClubFromSpecificDate()
+
+
+            binding.fixtureDateOne.setBackgroundColor(resources.getColor(R.color.teal_200))
+            buttonId.setBackgroundColor(resources.getColor(R.color.cardBackground))
+
+            buttonId = binding.fixtureDateOne
+
 
         }
 
@@ -195,6 +217,11 @@ class FixturesFragment : Fragment() {
             viewModel.getLogosOfHomeClubFromSpecificDate()
             viewModel.getLogosOfAwayClubFromSpecificDate()
 
+            binding.fixtureDateTwo.setBackgroundColor(resources.getColor(R.color.teal_200))
+            buttonId.setBackgroundColor(resources.getColor(R.color.cardBackground))
+
+            buttonId = binding.fixtureDateTwo
+
         }
 
         binding.fixtureDateThree.setOnClickListener {
@@ -206,6 +233,12 @@ class FixturesFragment : Fragment() {
             viewModel.getMatchesBySpecificDate(date, date, mapDate)
             viewModel.getLogosOfHomeClubFromSpecificDate()
             viewModel.getLogosOfAwayClubFromSpecificDate()
+
+            binding.fixtureDateThree.setBackgroundColor(resources.getColor(R.color.teal_200))
+            buttonId.setBackgroundColor(resources.getColor(R.color.cardBackground))
+
+            buttonId = binding.fixtureDateThree
+
 
         }
 
@@ -219,6 +252,12 @@ class FixturesFragment : Fragment() {
             viewModel.getLogosOfHomeClubFromSpecificDate()
             viewModel.getLogosOfAwayClubFromSpecificDate()
 
+            binding.fixtureDateFour.setBackgroundColor(resources.getColor(R.color.teal_200))
+            buttonId.setBackgroundColor(resources.getColor(R.color.cardBackground))
+
+            buttonId = binding.fixtureDateFour
+
+
         }
 
         binding.fixtureDateFive.setOnClickListener {
@@ -230,6 +269,12 @@ class FixturesFragment : Fragment() {
             viewModel.getMatchesBySpecificDate(date, date, mapDate)
             viewModel.getLogosOfHomeClubFromSpecificDate()
             viewModel.getLogosOfAwayClubFromSpecificDate()
+
+            binding.fixtureDateFive.setBackgroundColor(resources.getColor(R.color.teal_200))
+            buttonId.setBackgroundColor(resources.getColor(R.color.cardBackground))
+
+            buttonId = binding.fixtureDateFive
+
 
         }
 
@@ -243,6 +288,12 @@ class FixturesFragment : Fragment() {
             viewModel.getLogosOfHomeClubFromSpecificDate()
             viewModel.getLogosOfAwayClubFromSpecificDate()
 
+            binding.fixtureDateSix.setBackgroundColor(resources.getColor(R.color.teal_200))
+            buttonId.setBackgroundColor(resources.getColor(R.color.cardBackground))
+
+            buttonId = binding.fixtureDateSix
+
+
         }
 
         binding.fixtureDateSeven.setOnClickListener {
@@ -255,10 +306,18 @@ class FixturesFragment : Fragment() {
             viewModel.getLogosOfHomeClubFromSpecificDate()
             viewModel.getLogosOfAwayClubFromSpecificDate()
 
+            binding.fixtureDateSeven.setBackgroundColor(resources.getColor(R.color.teal_200))
+            buttonId.setBackgroundColor(resources.getColor(R.color.cardBackground))
+
+            buttonId = binding.fixtureDateSeven
+
+
         }
 
 
     }
+
+    // gets the date in the proper format that is required by the API
 
     private fun getProperDateFormatForTheApiCall(amount: Int): String {
         var calendar = Calendar.getInstance()
@@ -266,4 +325,5 @@ class FixturesFragment : Fragment() {
         var dateFormat = SimpleDateFormat("yyyy-MM-dd")
         return dateFormat.format(calendar.time)
     }
+
 }

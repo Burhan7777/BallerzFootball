@@ -4,9 +4,13 @@ CHANGELOG
 
 ver 1..(to be launched)
 ------------------------------
---> Write comments are over the code
---> Fixed the crash on getting no matches data
 --> Dates are working with the spinner
+
+ver 1.4.3 (16th April 2023)
+------------------------------
+--> Wrote comments are over the code
+--> Color of date button changes to the selected state
+--> Fixed the crash on getting no matches data
 
 ver 1.3.3 ALPHA (15th April 2023)
 ------------------------------
